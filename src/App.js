@@ -1,9 +1,9 @@
 import styles from './App.module.css';
 import { useState } from 'react';
+import { Buttons } from './components/Buttons.jsx';
+import { Screen } from './components/Screen.jsx';
 
 export const App = () => {
-	const NUMS = ['C', '-', '+', '=', '7', '8', '9', '4', '5', '6', '1', '2', '3', '0'];
-
 	const [operand1, setOperand1] = useState('');
 	const [operand2, setOperand2] = useState('');
 	const [operator, setOperator] = useState('');
@@ -51,40 +51,17 @@ export const App = () => {
 
 	return (
 		<div className={styles['calc']}>
-			<div className={styles['calc-screen']}>
-				{result === '' ? (
-					<p
-						className={
-							operand1.length + operand2.length > 9
-								? styles['text-formatting']
-								: null
-						}
-					>
-						{operand1 + operator + operand2}
-					</p>
-				) : (
-					<p className={styles['active']}>{result}</p>
-				)}
-			</div>
-			<div className="buttons">
-				{NUMS.map((num) => (
-					<button
-						className={
-							['C', '+', '-', '='].includes(num)
-								? styles['btn-calc']
-								: styles['btn-num']
-						}
-						key={num}
-						onClick={(event) => {
-							!isNaN(Number(event.target.textContent))
-								? handleNumberClick(event)
-								: handleOperatorClick(event.target.textContent);
-						}}
-					>
-						{num}
-					</button>
-				))}
-			</div>
+			<Screen
+				operand1={operand1}
+				operand2={operand2}
+				operator={operator}
+				result={result}
+			></Screen>
+
+			<Buttons
+				handleNumberClick={handleNumberClick}
+				handleOperatorClick={handleOperatorClick}
+			></Buttons>
 		</div>
 	);
 };
